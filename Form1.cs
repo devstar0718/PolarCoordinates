@@ -180,18 +180,6 @@ namespace PolarCoordinates
                 graphics.DrawEllipse(penArmFore, -5, -5, 10, 10);
             }
         }
-        private void buttonDraw_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                readSettings();
-                pictureBox1.Invalidate();
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
         private void readSettings()
         {
             sizePlatform = (float)NUDSize.Value;
@@ -309,6 +297,7 @@ namespace PolarCoordinates
         private void buttonConvertGcode_Click(object sender, EventArgs e)
         {
             gcodePoints.Clear();
+            readSettings();
             readGCodeText();
             ConvertGcode(0);
         }
