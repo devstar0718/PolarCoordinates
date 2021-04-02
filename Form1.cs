@@ -55,6 +55,8 @@ namespace PolarCoordinates
                 graphics.DrawString((i + 1).ToString(), new Font(FontFamily.GenericSansSerif, 12), new SolidBrush(Color.Black), x, y);
                 graphics.DrawLine(penPlatformLine, sizePlatform / 2, sizePlatform / 2, x, y);
                 graphics.DrawLine(penArmLine, 0, 0, x, y);
+                labelPlatformAngle.Text = Math.Round(polarPoints[i].AnglePlatform, 2).ToString();
+                labelArmAngle.Text = Math.Round(polarPoints[i].AngleArm, 2).ToString();
             }
         }
         private void drawOrgPoint(Graphics graphics)

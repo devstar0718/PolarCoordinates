@@ -35,19 +35,31 @@
             this.CBPlatformRange = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.buttonDraw = new System.Windows.Forms.Button();
             this.buttonConvert = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.NUDY = new System.Windows.Forms.NumericUpDown();
             this.NUDX = new System.Windows.Forms.NumericUpDown();
             this.NUDSize = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.buttonDraw = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.labelArmAngle = new System.Windows.Forms.Label();
+            this.labelPlatformAngle = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUDY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUDX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUDSize)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -118,34 +130,24 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(24, 98);
+            this.label6.Location = new System.Drawing.Point(12, 102);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 24);
+            this.label6.Size = new System.Drawing.Size(39, 24);
             this.label6.TabIndex = 2;
-            this.label6.Text = "X:";
+            this.label6.Text = "X1:";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(24, 144);
+            this.label7.Location = new System.Drawing.Point(169, 101);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(27, 24);
+            this.label7.Size = new System.Drawing.Size(37, 24);
             this.label7.TabIndex = 4;
-            this.label7.Text = "Y:";
-            // 
-            // buttonDraw
-            // 
-            this.buttonDraw.Location = new System.Drawing.Point(174, 95);
-            this.buttonDraw.Name = "buttonDraw";
-            this.buttonDraw.Size = new System.Drawing.Size(100, 33);
-            this.buttonDraw.TabIndex = 6;
-            this.buttonDraw.Text = "Draw";
-            this.buttonDraw.UseVisualStyleBackColor = true;
-            this.buttonDraw.Click += new System.EventHandler(this.buttonDraw_Click);
+            this.label7.Text = "Y1:";
             // 
             // buttonConvert
             // 
-            this.buttonConvert.Location = new System.Drawing.Point(174, 141);
+            this.buttonConvert.Location = new System.Drawing.Point(173, 194);
             this.buttonConvert.Name = "buttonConvert";
             this.buttonConvert.Size = new System.Drawing.Size(100, 33);
             this.buttonConvert.TabIndex = 6;
@@ -155,24 +157,62 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.numericUpDown2);
+            this.groupBox2.Controls.Add(this.numericUpDown1);
             this.groupBox2.Controls.Add(this.NUDY);
             this.groupBox2.Controls.Add(this.NUDX);
             this.groupBox2.Controls.Add(this.NUDSize);
             this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.buttonConvert);
             this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.buttonDraw);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Location = new System.Drawing.Point(630, 210);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(326, 199);
+            this.groupBox2.Size = new System.Drawing.Size(326, 256);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Canvas";
             // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Location = new System.Drawing.Point(212, 136);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(100, 29);
+            this.numericUpDown2.TabIndex = 7;
+            this.numericUpDown2.Value = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(57, 137);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(100, 29);
+            this.numericUpDown1.TabIndex = 7;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            // 
             // NUDY
             // 
-            this.NUDY.Location = new System.Drawing.Point(59, 142);
+            this.NUDY.Location = new System.Drawing.Point(212, 99);
             this.NUDY.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -189,7 +229,7 @@
             // 
             // NUDX
             // 
-            this.NUDX.Location = new System.Drawing.Point(59, 96);
+            this.NUDX.Location = new System.Drawing.Point(57, 100);
             this.NUDX.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -235,11 +275,89 @@
             this.label8.TabIndex = 2;
             this.label8.Text = "Platform Size:";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 139);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(39, 24);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "X2:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(169, 138);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(37, 24);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Y2:";
+            // 
+            // buttonDraw
+            // 
+            this.buttonDraw.Location = new System.Drawing.Point(46, 194);
+            this.buttonDraw.Name = "buttonDraw";
+            this.buttonDraw.Size = new System.Drawing.Size(100, 33);
+            this.buttonDraw.TabIndex = 6;
+            this.buttonDraw.Text = "Draw";
+            this.buttonDraw.UseVisualStyleBackColor = true;
+            this.buttonDraw.Click += new System.EventHandler(this.buttonDraw_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.labelArmAngle);
+            this.groupBox3.Controls.Add(this.labelPlatformAngle);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Location = new System.Drawing.Point(630, 472);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(326, 143);
+            this.groupBox3.TabIndex = 8;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Status";
+            // 
+            // labelArmAngle
+            // 
+            this.labelArmAngle.AutoSize = true;
+            this.labelArmAngle.Location = new System.Drawing.Point(170, 83);
+            this.labelArmAngle.Name = "labelArmAngle";
+            this.labelArmAngle.Size = new System.Drawing.Size(30, 24);
+            this.labelArmAngle.TabIndex = 1;
+            this.labelArmAngle.Text = "90";
+            // 
+            // labelPlatformAngle
+            // 
+            this.labelPlatformAngle.AutoSize = true;
+            this.labelPlatformAngle.Location = new System.Drawing.Point(170, 45);
+            this.labelPlatformAngle.Name = "labelPlatformAngle";
+            this.labelPlatformAngle.Size = new System.Drawing.Size(30, 24);
+            this.labelPlatformAngle.TabIndex = 1;
+            this.labelPlatformAngle.Text = "90";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(55, 83);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(105, 24);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Arm Angle:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(24, 45);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(137, 24);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Platform Angle:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(976, 631);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox1);
@@ -253,9 +371,13 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUDY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUDX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUDSize)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -266,7 +388,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button buttonDraw;
         private System.Windows.Forms.Button buttonConvert;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label8;
@@ -276,6 +397,16 @@
         private System.Windows.Forms.CheckBox CBMainRange;
         private System.Windows.Forms.CheckBox CBArmRange;
         private System.Windows.Forms.CheckBox CBPlatformRange;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonDraw;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label labelArmAngle;
+        private System.Windows.Forms.Label labelPlatformAngle;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
     }
 }
 
