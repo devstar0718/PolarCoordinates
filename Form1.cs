@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace PolarCoordinates
@@ -8,6 +9,7 @@ namespace PolarCoordinates
     public partial class Form1 : Form
     {
         private float sizePlatform = 600;
+
         private Pen penPlatformTemplate = new Pen(Color.Green, 1);
         private Pen penPlatformFore = new Pen(Color.Green, 3);
         private Pen penPlatformLine = new Pen(Color.Green, 2);
@@ -20,9 +22,12 @@ namespace PolarCoordinates
         private Pen penOrgTemplate = new Pen(Color.Black, 1);
         private Pen penOrgFore = new Pen(Color.Black, 3);
         private Pen penOrgLine = new Pen(Color.Black, 2);
+
         private Point[] orgPoints = new Point[2];
         private List<PolarPoint> polarPoints = new List<PolarPoint>();
         private Point curPoint = new Point();
+        private List<Point> gcodePoints = new List<Point>();
+        private int currentGcodeIndex = 0;
         public Form1()
         {
             InitializeComponent();
@@ -59,21 +64,35 @@ namespace PolarCoordinates
                 graphics.DrawLine(penArmLine, 0, 0, x, y);
                 labelPlatformAngle.Text = Math.Round(polarPoints[i].AnglePlatform, 2).ToString();
                 labelArmAngle.Text = Math.Round(polarPoints[i].AngleArm, 2).ToString();
-                drawPolarLine(graphics, polarPoints[i].AnglePlatform);
+                drawPolarLines(graphics, polarPoints[i].AnglePlatform);
             }
         }
-        private void drawPolarLine(Graphics graphics, double angleCur)
+        private void drawPolarLines(Graphics graphics, double angleCur)
         {
-            double angle1_org = calculateAngle(orgPoints[0]);
-            double angle2_org = calculateAngle(orgPoints[1]);
+            if (gcodePoints.Count > 1)
+            {
+                for (int i = 0; i < gcodePoints.Count - 1; i++)
+                {
+                    if(i < currentGcodeIndex)
+                        drawPolarLine(graphics, gcodePoints[i], gcodePoints[i + 1], angleCur, penMainLine);
+                    else
+                        drawPolarLine(graphics, gcodePoints[i], gcodePoints[i + 1], angleCur, penOrgLine);
+                }
+            }
+            drawPolarLine(graphics, orgPoints[0], curPoint, angleCur, penMainLine);
+            drawPolarLine(graphics, curPoint, orgPoints[1], angleCur, penOrgLine);
+
+        }
+        private void drawPolarLine(Graphics graphics, Point p1, Point p2, double angleCur, Pen pen)
+        {
+            double angle1_org = calculateAngle(p1);
+            double angle2_org = calculateAngle(p2);
             double angleCur_org = calculateAngle(curPoint);
             double angle1 = angle1_org + angleCur - angleCur_org;
             double angle2 = angle2_org + angleCur - angleCur_org;
-            Point p1 = rotatedPoint(orgPoints[0], angle1);
-            Point p2 = rotatedPoint(curPoint, angleCur);
-            Point p3 = rotatedPoint(orgPoints[1], angle2);
-            graphics.DrawLine(penMainLine, p1, p2);
-            graphics.DrawLine(penOrgLine, p2, p3);
+            Point rp1 = rotatedPoint(p1, angle1);
+            Point rp2 = rotatedPoint(p2, angle2);
+            graphics.DrawLine(pen, rp1, rp2);
         }
         private int linePointY(int x)
         {
@@ -117,11 +136,19 @@ namespace PolarCoordinates
         }
         private void drawOrgPoint(Graphics graphics)
         {
+            if (!CBMainRange.Checked) return;
             float r2 = (float)Math.Sqrt(Math.Pow(curPoint.X - sizePlatform / 2, 2) + Math.Pow(curPoint.Y - sizePlatform / 2, 2));
-            if (CBMainRange.Checked)
+            graphics.DrawEllipse(penOrgTemplate, sizePlatform / 2 - r2, sizePlatform / 2 - r2, r2 * 2, r2 * 2);
+            graphics.DrawEllipse(penOrgFore, curPoint.X - 5, curPoint.Y - 5, 10, 10);
+            if(gcodePoints.Count > 1)
             {
-                graphics.DrawEllipse(penOrgTemplate, sizePlatform / 2 - r2, sizePlatform / 2 - r2, r2 * 2, r2 * 2);
-                graphics.DrawEllipse(penOrgFore, curPoint.X - 5, curPoint.Y - 5, 10, 10);
+                for(int i = 0; i < gcodePoints.Count - 1; i++)
+                {
+                    graphics.DrawLine(penOrgLine, gcodePoints[i], gcodePoints[i + 1]);
+                }
+            }
+            else
+            {
                 graphics.DrawLine(penOrgLine, orgPoints[0], orgPoints[1]);
             }
         }
@@ -168,15 +195,15 @@ namespace PolarCoordinates
         private void readSettings()
         {
             sizePlatform = (float)NUDSize.Value;
-            orgPoints[0].X = (int)NUDX1.Value;
-            orgPoints[0].Y = (int)NUDY1.Value;
+            orgPoints[0].X = (int)NUDX1.Value + (int)sizePlatform / 2;
+            orgPoints[0].Y = (int)NUDY1.Value + (int)sizePlatform / 2;
             if (orgPoints[0].X > sizePlatform || orgPoints[0].Y > sizePlatform)
                 return;
-            orgPoints[1].X = (int)NUDX2.Value;
-            orgPoints[1].Y = (int)NUDY2.Value;
+            orgPoints[1].X = (int)NUDX2.Value + (int)sizePlatform / 2;
+            orgPoints[1].Y = (int)NUDY2.Value + (int)sizePlatform / 2;
             if (orgPoints[1].X > sizePlatform || orgPoints[1].Y > sizePlatform)
                 return;
-            if(orgPoints[0].X > orgPoints[1].X)
+            if(orgPoints[0].X > orgPoints[1].X || (orgPoints[0].X == orgPoints[1].X && orgPoints[0].Y > orgPoints[1].Y))
             {
                 Point temp = new Point();
                 temp.X = orgPoints[0].X;
@@ -189,15 +216,20 @@ namespace PolarCoordinates
         }
         private void buttonConvert_Click(object sender, EventArgs e)
         {
+            gcodePoints.Clear();
+            Convert();   
+        }
+        private void Convert()
+        {
             try
             {
                 readSettings();
-                if(orgPoints[0].X != orgPoints[1].X)
+                if (orgPoints[0].X != orgPoints[1].X)
                 {
                     trackBar1.Minimum = orgPoints[0].X;
                     trackBar1.Maximum = orgPoints[1].X;
                 }
-                else if(orgPoints[0].Y != orgPoints[1].Y)
+                else if (orgPoints[0].Y != orgPoints[1].Y)
                 {
                     trackBar1.Minimum = orgPoints[0].Y;
                     trackBar1.Maximum = orgPoints[1].Y;
@@ -209,7 +241,7 @@ namespace PolarCoordinates
                 }
                 setTrackPos(trackBar1.Minimum);
                 trackBar1.Value = trackBar1.Minimum;
-                buttonSimulate.Enabled = true ;
+                buttonSimulate.Enabled = true;
                 trackBar1.Enabled = true;
             }
             catch (Exception ex)
@@ -217,7 +249,6 @@ namespace PolarCoordinates
                 Console.WriteLine(ex.Message);
             }
         }
-
         private void CBSettings_CheckedChanged(object sender, EventArgs e)
         {
             pictureBox1.Invalidate();
@@ -248,7 +279,14 @@ namespace PolarCoordinates
         {
             if(trackBar1.Value == trackBar1.Maximum)
             {
-                timer1.Stop();
+                if(gcodePoints.Count > 1 && currentGcodeIndex < gcodePoints.Count - 1)
+                {
+                    ConvertGcode(currentGcodeIndex + 1);
+                }
+                else
+                {
+                    timer1.Stop();
+                }
                 return;
             }
             trackBar1.Value++;
@@ -260,6 +298,52 @@ namespace PolarCoordinates
             timer1.Interval = 10;
             trackBar1.Value = trackBar1.Minimum;
             timer1.Start();
+        }
+
+        private void NUDSize_ValueChanged(object sender, EventArgs e)
+        {
+            NUDX1.Maximum = NUDSize.Value / 2;
+            NUDX2.Maximum = NUDSize.Value / 2;
+            NUDY1.Maximum = NUDSize.Value / 2;
+            NUDY2.Maximum = NUDSize.Value / 2;
+            
+            NUDX1.Minimum = -NUDSize.Value / 2;
+            NUDX2.Minimum = -NUDSize.Value / 2;
+            NUDY1.Minimum = -NUDSize.Value / 2;
+            NUDY2.Minimum = -NUDSize.Value / 2;
+        }
+
+        private void buttonConvertGcode_Click(object sender, EventArgs e)
+        {
+            gcodePoints.Clear();
+            readGCodeText();
+            ConvertGcode(0);
+        }
+        private void ConvertGcode(int index)
+        {
+            currentGcodeIndex = index;
+            if (gcodePoints.Count > 2 && index < gcodePoints.Count - 1)
+            {
+                NUDX1.Value = gcodePoints[index].X - (int)sizePlatform / 2;
+                NUDY1.Value = gcodePoints[index].Y - (int)sizePlatform / 2;
+                NUDX2.Value = gcodePoints[index + 1].X - (int)sizePlatform / 2;
+                NUDY2.Value = gcodePoints[index + 1].Y - (int)sizePlatform / 2;
+                Convert();
+            }
+        }
+        private void readGCodeText()
+        {
+            string gcodes = textGCode.Text;
+            foreach(string line in Regex.Split(gcodes, "\r\n|\r|\n"))
+            {
+                string[] nodes = line.Split(' ');
+                if (nodes.Length < 3) continue;
+                if (nodes[1].ToUpper()[0] != 'X' || nodes[2].ToUpper()[0] != 'Y') continue;
+                Point point = new Point();
+                point.X = (int)float.Parse(nodes[1].Substring(1)) + (int)sizePlatform / 2;
+                point.Y = (int)float.Parse(nodes[2].Substring(1)) + (int)sizePlatform / 2;
+                gcodePoints.Add(point);
+            }
         }
     }
     public class Conversion

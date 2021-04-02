@@ -48,6 +48,7 @@
             this.NUDSize = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.buttonConvertGcode = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonSimulate = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -58,7 +59,7 @@
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textGCode = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -107,7 +108,7 @@
             this.RBDown.Location = new System.Drawing.Point(198, 69);
             this.RBDown.Name = "RBDown";
             this.RBDown.Size = new System.Drawing.Size(77, 28);
-            this.RBDown.TabIndex = 5;
+            this.RBDown.TabIndex = 4;
             this.RBDown.Text = "Down";
             this.RBDown.UseVisualStyleBackColor = true;
             // 
@@ -118,7 +119,7 @@
             this.RBTop.Location = new System.Drawing.Point(198, 35);
             this.RBTop.Name = "RBTop";
             this.RBTop.Size = new System.Drawing.Size(62, 28);
-            this.RBTop.TabIndex = 5;
+            this.RBTop.TabIndex = 3;
             this.RBTop.TabStop = true;
             this.RBTop.Text = "Top";
             this.RBTop.UseVisualStyleBackColor = true;
@@ -129,7 +130,7 @@
             this.CBMainRange.Location = new System.Drawing.Point(15, 103);
             this.CBMainRange.Name = "CBMainRange";
             this.CBMainRange.Size = new System.Drawing.Size(114, 28);
-            this.CBMainRange.TabIndex = 4;
+            this.CBMainRange.TabIndex = 2;
             this.CBMainRange.Text = "Show Org";
             this.CBMainRange.UseVisualStyleBackColor = true;
             this.CBMainRange.CheckedChanged += new System.EventHandler(this.CBSettings_CheckedChanged);
@@ -142,7 +143,7 @@
             this.CBArmRange.Location = new System.Drawing.Point(15, 69);
             this.CBArmRange.Name = "CBArmRange";
             this.CBArmRange.Size = new System.Drawing.Size(117, 28);
-            this.CBArmRange.TabIndex = 4;
+            this.CBArmRange.TabIndex = 1;
             this.CBArmRange.Text = "Show Arm";
             this.CBArmRange.UseVisualStyleBackColor = true;
             this.CBArmRange.CheckedChanged += new System.EventHandler(this.CBSettings_CheckedChanged);
@@ -155,7 +156,7 @@
             this.CBPlatformRange.Location = new System.Drawing.Point(15, 35);
             this.CBPlatformRange.Name = "CBPlatformRange";
             this.CBPlatformRange.Size = new System.Drawing.Size(149, 28);
-            this.CBPlatformRange.TabIndex = 4;
+            this.CBPlatformRange.TabIndex = 0;
             this.CBPlatformRange.Text = "Show Platform";
             this.CBPlatformRange.UseVisualStyleBackColor = true;
             this.CBPlatformRange.CheckedChanged += new System.EventHandler(this.CBSettings_CheckedChanged);
@@ -180,10 +181,10 @@
             // 
             // buttonConvert
             // 
-            this.buttonConvert.Location = new System.Drawing.Point(106, 164);
+            this.buttonConvert.Location = new System.Drawing.Point(26, 160);
             this.buttonConvert.Name = "buttonConvert";
             this.buttonConvert.Size = new System.Drawing.Size(100, 33);
-            this.buttonConvert.TabIndex = 6;
+            this.buttonConvert.TabIndex = 5;
             this.buttonConvert.Text = "Convert";
             this.buttonConvert.UseVisualStyleBackColor = true;
             this.buttonConvert.Click += new System.EventHandler(this.buttonConvert_Click);
@@ -198,6 +199,7 @@
             this.groupBox2.Controls.Add(this.NUDSize);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.buttonConvertGcode);
             this.groupBox2.Controls.Add(this.buttonConvert);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label1);
@@ -223,15 +225,20 @@
             // 
             this.NUDY2.Location = new System.Drawing.Point(212, 115);
             this.NUDY2.Maximum = new decimal(new int[] {
-            1000,
+            300,
             0,
             0,
             0});
+            this.NUDY2.Minimum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            -2147483648});
             this.NUDY2.Name = "NUDY2";
             this.NUDY2.Size = new System.Drawing.Size(100, 29);
-            this.NUDY2.TabIndex = 7;
+            this.NUDY2.TabIndex = 4;
             this.NUDY2.Value = new decimal(new int[] {
-            500,
+            200,
             0,
             0,
             0});
@@ -240,15 +247,20 @@
             // 
             this.NUDX2.Location = new System.Drawing.Point(57, 116);
             this.NUDX2.Maximum = new decimal(new int[] {
-            1000,
+            300,
             0,
             0,
             0});
+            this.NUDX2.Minimum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            -2147483648});
             this.NUDX2.Name = "NUDX2";
             this.NUDX2.Size = new System.Drawing.Size(100, 29);
-            this.NUDX2.TabIndex = 7;
+            this.NUDX2.TabIndex = 3;
             this.NUDX2.Value = new decimal(new int[] {
-            500,
+            100,
             0,
             0,
             0});
@@ -257,15 +269,20 @@
             // 
             this.NUDY1.Location = new System.Drawing.Point(212, 78);
             this.NUDY1.Maximum = new decimal(new int[] {
-            1000,
+            300,
             0,
             0,
             0});
+            this.NUDY1.Minimum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            -2147483648});
             this.NUDY1.Name = "NUDY1";
             this.NUDY1.Size = new System.Drawing.Size(100, 29);
-            this.NUDY1.TabIndex = 7;
+            this.NUDY1.TabIndex = 2;
             this.NUDY1.Value = new decimal(new int[] {
-            400,
+            100,
             0,
             0,
             0});
@@ -274,15 +291,20 @@
             // 
             this.NUDX1.Location = new System.Drawing.Point(57, 79);
             this.NUDX1.Maximum = new decimal(new int[] {
-            1000,
+            300,
             0,
             0,
             0});
+            this.NUDX1.Minimum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            -2147483648});
             this.NUDX1.Name = "NUDX1";
             this.NUDX1.Size = new System.Drawing.Size(100, 29);
-            this.NUDX1.TabIndex = 7;
+            this.NUDX1.TabIndex = 1;
             this.NUDX1.Value = new decimal(new int[] {
-            350,
+            150,
             0,
             0,
             0});
@@ -302,12 +324,13 @@
             0});
             this.NUDSize.Name = "NUDSize";
             this.NUDSize.Size = new System.Drawing.Size(100, 29);
-            this.NUDSize.TabIndex = 7;
+            this.NUDSize.TabIndex = 0;
             this.NUDSize.Value = new decimal(new int[] {
             600,
             0,
             0,
             0});
+            this.NUDSize.ValueChanged += new System.EventHandler(this.NUDSize_ValueChanged);
             // 
             // label8
             // 
@@ -327,6 +350,16 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "X2:";
             // 
+            // buttonConvertGcode
+            // 
+            this.buttonConvertGcode.Location = new System.Drawing.Point(153, 160);
+            this.buttonConvertGcode.Name = "buttonConvertGcode";
+            this.buttonConvertGcode.Size = new System.Drawing.Size(148, 33);
+            this.buttonConvertGcode.TabIndex = 6;
+            this.buttonConvertGcode.Text = "Convert GCode";
+            this.buttonConvertGcode.UseVisualStyleBackColor = true;
+            this.buttonConvertGcode.Click += new System.EventHandler(this.buttonConvertGcode_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -342,7 +375,7 @@
             this.buttonSimulate.Location = new System.Drawing.Point(106, 278);
             this.buttonSimulate.Name = "buttonSimulate";
             this.buttonSimulate.Size = new System.Drawing.Size(100, 33);
-            this.buttonSimulate.TabIndex = 6;
+            this.buttonSimulate.TabIndex = 7;
             this.buttonSimulate.Text = "Simulate";
             this.buttonSimulate.UseVisualStyleBackColor = true;
             this.buttonSimulate.Click += new System.EventHandler(this.buttonSimulate_Click);
@@ -402,28 +435,28 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.textBox1);
+            this.groupBox4.Controls.Add(this.textGCode);
             this.groupBox4.Location = new System.Drawing.Point(965, 15);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(316, 600);
+            this.groupBox4.Size = new System.Drawing.Size(426, 600);
             this.groupBox4.TabIndex = 9;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "GCode";
             // 
-            // textBox1
+            // textGCode
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBox1.Location = new System.Drawing.Point(3, 25);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(310, 572);
-            this.textBox1.TabIndex = 0;
+            this.textGCode.Dock = System.Windows.Forms.DockStyle.Top;
+            this.textGCode.Location = new System.Drawing.Point(3, 25);
+            this.textGCode.Multiline = true;
+            this.textGCode.Name = "textGCode";
+            this.textGCode.Size = new System.Drawing.Size(420, 572);
+            this.textGCode.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1293, 631);
+            this.ClientSize = new System.Drawing.Size(1403, 631);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -485,7 +518,8 @@
         private System.Windows.Forms.RadioButton RBDown;
         private System.Windows.Forms.RadioButton RBTop;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textGCode;
+        private System.Windows.Forms.Button buttonConvertGcode;
     }
 }
 
