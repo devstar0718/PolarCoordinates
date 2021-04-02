@@ -197,22 +197,9 @@ namespace PolarCoordinates
             sizePlatform = (float)NUDSize.Value;
             orgPoints[0].X = (int)NUDX1.Value + (int)sizePlatform / 2;
             orgPoints[0].Y = (int)NUDY1.Value + (int)sizePlatform / 2;
-            if (orgPoints[0].X > sizePlatform || orgPoints[0].Y > sizePlatform)
-                return;
+            
             orgPoints[1].X = (int)NUDX2.Value + (int)sizePlatform / 2;
             orgPoints[1].Y = (int)NUDY2.Value + (int)sizePlatform / 2;
-            if (orgPoints[1].X > sizePlatform || orgPoints[1].Y > sizePlatform)
-                return;
-            if(orgPoints[0].X > orgPoints[1].X || (orgPoints[0].X == orgPoints[1].X && orgPoints[0].Y > orgPoints[1].Y))
-            {
-                Point temp = new Point();
-                temp.X = orgPoints[0].X;
-                temp.Y = orgPoints[0].Y;
-                orgPoints[0].X = orgPoints[1].X;
-                orgPoints[0].Y = orgPoints[1].Y;
-                orgPoints[1].X = temp.X;
-                orgPoints[1].Y = temp.Y;
-            }
         }
         private void buttonConvert_Click(object sender, EventArgs e)
         {
@@ -224,15 +211,14 @@ namespace PolarCoordinates
             try
             {
                 readSettings();
+                trackBar1.Minimum = 0;
                 if (orgPoints[0].X != orgPoints[1].X)
                 {
-                    trackBar1.Minimum = orgPoints[0].X;
-                    trackBar1.Maximum = orgPoints[1].X;
+                    trackBar1.Maximum = Math.Abs(orgPoints[0].X - orgPoints[1].X);
                 }
                 else if (orgPoints[0].Y != orgPoints[1].Y)
                 {
-                    trackBar1.Minimum = orgPoints[0].Y;
-                    trackBar1.Maximum = orgPoints[1].Y;
+                    trackBar1.Maximum = Math.Abs(orgPoints[0].Y - orgPoints[1].Y);
                 }
                 else
                 {
@@ -262,12 +248,18 @@ namespace PolarCoordinates
         {
             if (orgPoints[0].X != orgPoints[1].X)
             {
-                curPoint.X = val;
+                if(orgPoints[0].X < orgPoints[1].X)
+                    curPoint.X = orgPoints[0].X + val;
+                else
+                    curPoint.X = orgPoints[0].X - val;
                 curPoint.Y = linePointY(curPoint.X);
             }
             else
             {
-                curPoint.Y = val;
+                if (orgPoints[0].Y < orgPoints[1].Y)
+                    curPoint.Y = orgPoints[0].Y + val;
+                else
+                    curPoint.Y = orgPoints[0].Y - val;
                 curPoint.X = linePointX(curPoint.Y);
             }
             Conversion conversion = new Conversion(sizePlatform / 2, RBTop.Checked);
@@ -297,6 +289,7 @@ namespace PolarCoordinates
         {
             timer1.Interval = 10;
             trackBar1.Value = trackBar1.Minimum;
+            ConvertGcode(0);
             timer1.Start();
         }
 
