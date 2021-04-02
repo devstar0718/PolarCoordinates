@@ -82,6 +82,13 @@ namespace PolarCoordinates
             double y = orgPoints[0].Y + (x - orgPoints[0].X) * d;
             return (int)y;
         }
+        private int linePointX(int y)
+        {
+            if (orgPoints[1].Y == orgPoints[0].Y) return 0;
+            double d = (orgPoints[1].X - orgPoints[0].X) * 1.0 / (orgPoints[1].Y - orgPoints[0].Y);
+            double x = orgPoints[0].X + (y - orgPoints[0].Y) * d;
+            return (int)x;
+        }
         private double calculateAngle(Point point)
         {
             int x = point.X - (int)sizePlatform / 2;
@@ -185,15 +192,23 @@ namespace PolarCoordinates
             try
             {
                 readSettings();
-                if(orgPoints[0].X == orgPoints[1].X)
+                if(orgPoints[0].X != orgPoints[1].X)
                 {
-                    MessageBox.Show("Please input different X values");
+                    trackBar1.Minimum = orgPoints[0].X;
+                    trackBar1.Maximum = orgPoints[1].X;
+                }
+                else if(orgPoints[0].Y != orgPoints[1].Y)
+                {
+                    trackBar1.Minimum = orgPoints[0].Y;
+                    trackBar1.Maximum = orgPoints[1].Y;
+                }
+                else
+                {
+                    MessageBox.Show("Please input different Points");
                     return;
                 }
-                trackBar1.Minimum = orgPoints[0].X;
-                trackBar1.Maximum = orgPoints[1].X;
-                trackBar1.Value = trackBar1.Minimum;
                 setTrackPos(trackBar1.Minimum);
+                trackBar1.Value = trackBar1.Minimum;
                 buttonSimulate.Enabled = true ;
                 trackBar1.Enabled = true;
             }
@@ -214,8 +229,16 @@ namespace PolarCoordinates
         }
         private void setTrackPos(int val)
         {
-            curPoint.X = val;
-            curPoint.Y = linePointY(curPoint.X);
+            if (orgPoints[0].X != orgPoints[1].X)
+            {
+                curPoint.X = val;
+                curPoint.Y = linePointY(curPoint.X);
+            }
+            else
+            {
+                curPoint.Y = val;
+                curPoint.X = linePointX(curPoint.Y);
+            }
             Conversion conversion = new Conversion(sizePlatform / 2, RBTop.Checked);
             polarPoints = conversion.CatisionToPolar(curPoint);
             pictureBox1.Invalidate();
