@@ -30,12 +30,9 @@
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.labelSize = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.CBMainRange = new System.Windows.Forms.CheckBox();
+            this.CBArmRange = new System.Windows.Forms.CheckBox();
+            this.CBPlatformRange = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.buttonDraw = new System.Windows.Forms.Button();
@@ -66,12 +63,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.labelSize);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.CBMainRange);
+            this.groupBox1.Controls.Add(this.CBArmRange);
+            this.groupBox1.Controls.Add(this.CBPlatformRange);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(627, 15);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(6);
@@ -82,59 +76,44 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Setting";
             // 
-            // label5
+            // CBMainRange
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(173, 126);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(30, 24);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "30";
+            this.CBMainRange.AutoSize = true;
+            this.CBMainRange.Checked = true;
+            this.CBMainRange.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CBMainRange.Location = new System.Drawing.Point(31, 112);
+            this.CBMainRange.Name = "CBMainRange";
+            this.CBMainRange.Size = new System.Drawing.Size(184, 28);
+            this.CBMainRange.TabIndex = 4;
+            this.CBMainRange.Text = "Show Main Range";
+            this.CBMainRange.UseVisualStyleBackColor = true;
+            this.CBMainRange.CheckedChanged += new System.EventHandler(this.CBSettings_CheckedChanged);
             // 
-            // label4
+            // CBArmRange
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(173, 86);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(30, 24);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "90";
+            this.CBArmRange.AutoSize = true;
+            this.CBArmRange.Checked = true;
+            this.CBArmRange.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CBArmRange.Location = new System.Drawing.Point(31, 78);
+            this.CBArmRange.Name = "CBArmRange";
+            this.CBArmRange.Size = new System.Drawing.Size(178, 28);
+            this.CBArmRange.TabIndex = 4;
+            this.CBArmRange.Text = "Show Arm Range";
+            this.CBArmRange.UseVisualStyleBackColor = true;
+            this.CBArmRange.CheckedChanged += new System.EventHandler(this.CBSettings_CheckedChanged);
             // 
-            // labelSize
+            // CBPlatformRange
             // 
-            this.labelSize.AutoSize = true;
-            this.labelSize.Location = new System.Drawing.Point(173, 46);
-            this.labelSize.Name = "labelSize";
-            this.labelSize.Size = new System.Drawing.Size(87, 24);
-            this.labelSize.TabIndex = 1;
-            this.labelSize.Text = "600 * 600";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 46);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(123, 24);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Platform Size:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 86);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(137, 24);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Platform Angle:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(25, 126);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(105, 24);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Arm Angle:";
+            this.CBPlatformRange.AutoSize = true;
+            this.CBPlatformRange.Checked = true;
+            this.CBPlatformRange.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CBPlatformRange.Location = new System.Drawing.Point(31, 44);
+            this.CBPlatformRange.Name = "CBPlatformRange";
+            this.CBPlatformRange.Size = new System.Drawing.Size(210, 28);
+            this.CBPlatformRange.TabIndex = 4;
+            this.CBPlatformRange.Text = "Show Platform Range";
+            this.CBPlatformRange.UseVisualStyleBackColor = true;
+            this.CBPlatformRange.CheckedChanged += new System.EventHandler(this.CBSettings_CheckedChanged);
             // 
             // label6
             // 
@@ -285,12 +264,6 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label labelSize;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button buttonDraw;
@@ -300,6 +273,9 @@
         private System.Windows.Forms.NumericUpDown NUDY;
         private System.Windows.Forms.NumericUpDown NUDX;
         private System.Windows.Forms.NumericUpDown NUDSize;
+        private System.Windows.Forms.CheckBox CBMainRange;
+        private System.Windows.Forms.CheckBox CBArmRange;
+        private System.Windows.Forms.CheckBox CBPlatformRange;
     }
 }
 

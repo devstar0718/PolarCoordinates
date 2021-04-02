@@ -60,26 +60,33 @@ namespace PolarCoordinates
         private void drawOrgPoint(Graphics graphics)
         {
             float r2 = (float)Math.Sqrt(Math.Pow(pointOrg.X - sizePlatform / 2, 2) + Math.Pow(pointOrg.Y - sizePlatform / 2, 2));
-            graphics.DrawEllipse(penMainTemplate, sizePlatform / 2 - r2, sizePlatform / 2 - r2, r2 * 2, r2 * 2);
-            graphics.DrawEllipse(penMainFore, pointOrg.X - 5, pointOrg.Y - 5, 10, 10);
+            if (CBMainRange.Checked)
+            {
+                graphics.DrawEllipse(penMainTemplate, sizePlatform / 2 - r2, sizePlatform / 2 - r2, r2 * 2, r2 * 2);
+                graphics.DrawEllipse(penMainFore, pointOrg.X - 5, pointOrg.Y - 5, 10, 10);
+            }
         }
         private void drawTemplates(Graphics graphics)
         {
-            graphics.DrawLine(penPlatformTemplate, 0, sizePlatform / 2, sizePlatform, sizePlatform / 2);
-            graphics.DrawLine(penPlatformTemplate, sizePlatform / 2, 0, sizePlatform / 2, sizePlatform);
-            graphics.DrawEllipse(penPlatformTemplate, 0, 0, sizePlatform, sizePlatform);
-            graphics.DrawEllipse(penPlatformFore, sizePlatform / 2 - 5, sizePlatform / 2 - 5, 10, 10);
-
+            if (CBPlatformRange.Checked)
+            {
+                graphics.DrawLine(penPlatformTemplate, 0, sizePlatform / 2, sizePlatform, sizePlatform / 2);
+                graphics.DrawLine(penPlatformTemplate, sizePlatform / 2, 0, sizePlatform / 2, sizePlatform);
+                graphics.DrawEllipse(penPlatformTemplate, 0, 0, sizePlatform, sizePlatform);
+                graphics.DrawEllipse(penPlatformFore, sizePlatform / 2 - 5, sizePlatform / 2 - 5, 10, 10);
+            }
             float r1 = sizePlatform / (float)Math.Sqrt(2);
-            graphics.DrawEllipse(penArmTemplate, -r1, -r1, r1 * 2, r1 * 2);
-            graphics.DrawEllipse(penArmFore, -5, -5, 10, 10);
+            if (CBArmRange.Checked)
+            {
+                graphics.DrawEllipse(penArmTemplate, -r1, -r1, r1 * 2, r1 * 2);
+                graphics.DrawEllipse(penArmFore, -5, -5, 10, 10);
+            }
         }
         private void buttonDraw_Click(object sender, EventArgs e)
         {
             try
             {
                 sizePlatform = (float)NUDSize.Value;
-                labelSize.Text = string.Format("{0} * {0}", sizePlatform);
                 pointOrg.X = (int)NUDX.Value;
                 pointOrg.Y = (int)NUDY.Value;
                 if (pointOrg.X > sizePlatform || pointOrg.Y > sizePlatform)
@@ -93,9 +100,25 @@ namespace PolarCoordinates
         }
         private void buttonConvert_Click(object sender, EventArgs e)
         {
-            buttonDraw_Click(sender, e);
-            Conversion conversion = new Conversion(sizePlatform / 2);
-            polarPoints = conversion.CatisionToPolar(pointOrg);
+            try
+            {
+                sizePlatform = (float)NUDSize.Value;
+                pointOrg.X = (int)NUDX.Value;
+                pointOrg.Y = (int)NUDY.Value;
+                if (pointOrg.X > sizePlatform || pointOrg.Y > sizePlatform)
+                    return;
+                Conversion conversion = new Conversion(sizePlatform / 2);
+                polarPoints = conversion.CatisionToPolar(pointOrg);
+                pictureBox1.Invalidate();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void CBSettings_CheckedChanged(object sender, EventArgs e)
+        {
             pictureBox1.Invalidate();
         }
     }
@@ -118,10 +141,10 @@ namespace PolarCoordinates
                 Console.WriteLine("Platform Radius must be lower than double of Arm Radius");
                 return null;
             }
-            double[] sinPlatAngle = new double[2];
+            double[] sinPlatAngle = new double[1];
             double sqrtUP = Math.Sqrt(2 - Math.Pow(r2 / r1, 2) / 2);
             sinPlatAngle[0] = (-1 / sqrt2 * r2 / r1 + sqrtUP) / 2;
-            sinPlatAngle[1] = (-1 / sqrt2 * r2 / r1 - sqrtUP) / 2;
+            //sinPlatAngle[1] = (-1 / sqrt2 * r2 / r1 - sqrtUP) / 2;
             //sinPlatAngle[2] = (1 / sqrt2 * r2 / r1 + sqrtUP) / 2;
             //sinPlatAngle[3] = (1 / sqrt2 * r2 / r1 - sqrtUP) / 2;
             List<PolarPoint> listAngles = new List<PolarPoint>();
